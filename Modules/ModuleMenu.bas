@@ -67,7 +67,7 @@ Sub menuPenjualanBarang()
     wsMenu.Range("A1").Select
 End Sub
 
-Sub menuRekapPenjualan()
+Sub menuPrintRekapData()
     Call SetWorksheets
     wsMenu.Shapes.Range(Array("shape_active_merek_barang")).Visible = msoFalse
     wsMenu.Shapes.Range(Array("shape_active_kategori_barang")).Visible = msoFalse

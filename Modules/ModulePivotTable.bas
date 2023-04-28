@@ -30,15 +30,19 @@ Sub RefreshPivotTable()
     Pivot7.RefreshTable
 End Sub
 
-Sub PrintTotalPembelian()
+Sub LegacyPrintTotalPembelian()
     Call SetWorksheets
     Dim PivotPembelian As PivotTable
     Set PivotPembelian = wsDataModel.PivotTables("PivotMerekTotalPembelian")
     'PivotPembelian.TableRange1.PrintOut
     
+    makeDirectory
     Dim saveLocation As String
-    saveLocation = "C:\Users\arman\Desktop\test\Laporan Total Pembelian_" & Format(Now, "DD-MM-YYYY_HH-MM_") & ".pdf"
-    'saveLocation = "F:\Arman\VBA Excel\test\Laporan Total Pembelian_" & Format(Now, "DD-MM-YYYY_HH-MM_") & ".pdf"
+    Dim fileName As String
+    
+    fileName = "\Laporan Total Pembelian_" & Format(Now, "DD-MM-YYYY_HH-MM_") & ".pdf"
+    saveLocation = getPath("\Laporan Data\Total Pembelian") + fileName
+    'saveLocation = getPath & "\Laporan Data\Total Pembelian\Laporan Total Pembelian_" & Format(Now, "DD-MM-YYYY_HH-MM_") & ".pdf"
     
     ' Set Header
     Dim headerText As String
@@ -69,7 +73,7 @@ Sub PrintTotalPembelian()
     
         targetExportRange.ExportAsFixedFormat _
             Type:=xlTypePDF, _
-            Filename:=saveLocation, _
+            fileName:=saveLocation, _
             Quality:=xlQualityStandard, _
             IncludeDocProperties:=True, _
             IgnorePrintAreas:=False, _
