@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} FormMasterBarang 
    Caption         =   "Form Master Barang"
-   ClientHeight    =   10695
+   ClientHeight    =   10935
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   8565.001
+   ClientWidth     =   8595.001
    OleObjectBlob   =   "FormMasterBarang.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -28,6 +28,7 @@ Private Sub UserForm_Initialize()
     LabelHargaBeli.BackColor = RGB(29, 29, 66)
     LabelHargaJual.BackColor = RGB(29, 29, 66)
     LabelStok.BackColor = RGB(29, 29, 66)
+    LabelCari.BackColor = RGB(29, 29, 66)
     CmdBtnSimpan.BackColor = RGB(37, 215, 152)
     CmdBtnBatal.BackColor = RGB(255, 192, 0)
     CmdBtnHapus.BackColor = RGB(231, 21, 86)
@@ -64,21 +65,21 @@ Private Sub CmdBtnSimpan_Click()
     idKategoriBarang = cariByIdKategoriBarang.Offset(0, -1).Value
     
     Dim baris As Long
+    Dim idMerekBarangBefore As String
+    Dim namaMerekBefore As String
+    Dim idKategoriBarangBefore As String
+    Dim namaKategoriBefore As String
+    Dim namaBarangBefore As String
     
     If cariById Is Nothing Then
         baris = getBarisMasterBarang + 1
     Else
         baris = cariById.Row
-        Dim lastRow As Long
-        Dim i As Long
-        lastRow = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
-        For i = 2 To lastRow
-            If wsBarangMasuk.Cells(i, 9).Value = cariById.Value Then
-                wsBarangMasuk.Cells(i, 10).Value = cariById.Offset(0, 1).Value
-            End If
-        Next i
-        
-        RefreshPivotTable
+        idMerekBarangBefore = cariById.Offset(0, 2).Value
+        namaMerekBefore = cariById.Offset(0, 3).Value
+        idKategoriBarangBefore = cariById.Offset(0, 4).Value
+        namaKategoriBefore = cariById.Offset(0, 5).Value
+        namaBarangBefore = cariById.Offset(0, 1).Value
     End If
     
     Dim isiData As Variant
@@ -89,6 +90,80 @@ Private Sub CmdBtnSimpan_Click()
                     TextBoxStok.Value)
                     
     wsMasterBarang.Range("A" & baris).Resize(1, 9).Value = isiData
+    
+    If baris = cariById.Row Then
+    
+        ' merek barang
+        If namaMerekBefore <> ComboBoxMerekBarang.Value Then
+'            MsgBox namaMerekBefore & " = " & ComboBoxMerekBarang.Value & " " & cariById.Offset(0, 2).Value
+            Dim lastRow As Long
+            Dim i As Long
+            lastRow = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
+            For i = 2 To lastRow
+'                MsgBox wsBarangMasuk.Cells(i, 5).Value & " = " & idMerekBarangBefore
+                If wsBarangMasuk.Cells(i, 5).Value = idMerekBarangBefore Then
+                    wsBarangMasuk.Cells(i, 5).Value = cariById.Offset(0, 2).Value
+                    wsBarangMasuk.Cells(i, 6).Value = cariById.Offset(0, 3).Value
+                End If
+            Next i
+            
+            lastRow = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
+            For i = 2 To lastRow
+'                MsgBox wsBarangMasuk.Cells(i, 5).Value & " = " & idMerekBarangBefore
+                If wsPenjualanBarang.Cells(i, 5).Value = idMerekBarangBefore Then
+                    wsPenjualanBarang.Cells(i, 5).Value = cariById.Offset(0, 2).Value
+                    wsPenjualanBarang.Cells(i, 6).Value = cariById.Offset(0, 3).Value
+                End If
+            Next i
+        End If
+        
+        ' kategori barang
+        If namaKategoriBefore <> ComboBoxKategoriBarang.Value Then
+'            MsgBox namaKategoriBefore & " = " & ComboBoxKategoriBarang.Value & " " & cariById.Offset(0, 4).Value
+            Dim lastRowKategoriBarang As Long
+            Dim iKategoriBarang As Long
+            lastRowKategoriBarang = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
+            For iKategoriBarang = 2 To lastRowKategoriBarang
+'                MsgBox wsBarangMasuk.Cells(iKategoriBarang, 7).Value & " = " & idKategoriBarangBefore
+                If wsBarangMasuk.Cells(iKategoriBarang, 7).Value = idKategoriBarangBefore Then
+                    wsBarangMasuk.Cells(iKategoriBarang, 7).Value = cariById.Offset(0, 4).Value
+                    wsBarangMasuk.Cells(iKategoriBarang, 8).Value = cariById.Offset(0, 5).Value
+                End If
+            Next iKategoriBarang
+            
+            lastRowKategoriBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
+            For iKategoriBarang = 2 To lastRowKategoriBarang
+'                MsgBox wsBarangMasuk.Cells(iKategoriBarang, 7).Value & " = " & idKategoriBarangBefore
+                If wsPenjualanBarang.Cells(iKategoriBarang, 7).Value = idKategoriBarangBefore Then
+                    wsPenjualanBarang.Cells(iKategoriBarang, 7).Value = cariById.Offset(0, 4).Value
+                    wsPenjualanBarang.Cells(iKategoriBarang, 8).Value = cariById.Offset(0, 5).Value
+                End If
+            Next iKategoriBarang
+        End If
+    
+        ' nama barang
+        If namaBarangBefore <> TextBoxNamaBarang.Value Then
+'            MsgBox namaBarangBefore & " = " & TextBoxNamaBarang.Value
+            Dim lastRowNamaBarang As Long
+            Dim iNamaBarang As Long
+            lastRowNamaBarang = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
+            For iNamaBarang = 2 To lastRowNamaBarang
+                If wsBarangMasuk.Cells(iNamaBarang, 9).Value = cariById.Value Then
+                    wsBarangMasuk.Cells(iNamaBarang, 10).Value = cariById.Offset(0, 1).Value
+                End If
+            Next iNamaBarang
+            
+            lastRowNamaBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
+            For iNamaBarang = 2 To lastRowNamaBarang
+                If wsPenjualanBarang.Cells(iNamaBarang, 9).Value = cariById.Value Then
+                    wsPenjualanBarang.Cells(iNamaBarang, 10).Value = cariById.Offset(0, 1).Value
+                End If
+            Next iNamaBarang
+        End If
+        
+        RefreshPivotTable
+    End If
+    
     MsgBox "Data berhasil disimpan!", vbInformation
     Call bersihForm
     TextBoxIdMasterBarang.Text = buatIdMasterBarang

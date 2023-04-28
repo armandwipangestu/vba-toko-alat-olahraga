@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} FormPenjualanBarang 
    Caption         =   "Form Penjualan Barang"
-   ClientHeight    =   9900.001
+   ClientHeight    =   10110
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   8640.001
@@ -29,6 +29,7 @@ Private Sub UserForm_Initialize()
     LabelHargaBeli.BackColor = RGB(29, 29, 66)
     LabelHargaJual.BackColor = RGB(29, 29, 66)
     LabelKeuntungan.BackColor = RGB(29, 29, 66)
+    LabelCari.BackColor = RGB(29, 29, 66)
     CmdBtnSimpan.BackColor = RGB(37, 215, 152)
     CmdBtnBatal.BackColor = RGB(255, 192, 0)
     CmdBtnHapus.BackColor = RGB(231, 21, 86)

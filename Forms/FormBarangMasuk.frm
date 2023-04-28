@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} FormBarangMasuk 
    Caption         =   "Form Barang Masuk"
-   ClientHeight    =   8850.001
+   ClientHeight    =   9015.001
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   8595.001
@@ -25,6 +25,7 @@ Private Sub UserForm_Initialize()
     LabelTanggalMasuk.BackColor = RGB(29, 29, 66)
     LabelFormatTanggal.BackColor = RGB(29, 29, 66)
     LabelJumlahMasuk.BackColor = RGB(29, 29, 66)
+    LabelCari.BackColor = RGB(29, 29, 66)
     CmdBtnSimpan.BackColor = RGB(37, 215, 152)
     CmdBtnBatal.BackColor = RGB(255, 192, 0)
     CmdBtnHapus.BackColor = RGB(231, 21, 86)
