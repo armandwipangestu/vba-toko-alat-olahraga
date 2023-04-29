@@ -4,7 +4,6 @@ Option Explicit
 Sub PrintTotalPembelian()
     Call SetWorksheets
     
-    makeDirectory
     Dim saveLocation As String
     Dim fileName As String
     
@@ -25,10 +24,11 @@ Sub PrintTotalPembelian()
     answer = MsgBox("Apakah anda yakin?", vbQuestion + vbYesNo + vbDefaultButton2, "Print Total Pembelian")
     
     If answer = vbYes Then
+        makeDirectory
         ' Set Page Setup Options
         With wsToExport.PageSetup
             .LeftHeader = "&""Arial,Bold""&14" & headerText
-            .RightHeader = "&""Arial,Regular""&14" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD MMMM YYYY - H:M")
+            .RightHeader = "&""Arial,Regular""&14" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD MMMM YYYY - HH:MM")
             .CenterHorizontally = True
             .Orientation = xlPortrait
             .FitToPagesWide = 1
@@ -40,8 +40,9 @@ Sub PrintTotalPembelian()
             fileName:=saveLocation, _
             Quality:=xlQualityStandard, _
             IncludeDocProperties:=True, _
-            IgnorePrintAreas:=False, _
-            OpenAfterPublish:=True
+            IgnorePrintAreas:=False
+'            IgnorePrintAreas:=False, _
+'            OpenAfterPublish:=True
     End If
 End Sub
 

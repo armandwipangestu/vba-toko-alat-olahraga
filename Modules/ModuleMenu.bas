@@ -76,6 +76,7 @@ Sub menuPrintRekapData()
     wsMenu.Shapes.Range(Array("shape_active_penjualan_barang")).Visible = msoFalse
     wsMenu.Shapes.Range(Array("shape_active_rekap_penjualan")).Visible = msoTrue
     
+    FormPrintRekapData.Show
     wsMenu.Range("A1").Select
 End Sub
 
