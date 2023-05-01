@@ -65,6 +65,7 @@ Private Sub CmdBtnSimpan_Click()
     idKategoriBarang = cariByIdKategoriBarang.Offset(0, -1).Value
     
     Dim baris As Long
+    Dim trigger As Boolean
     Dim idMerekBarangBefore As String
     Dim namaMerekBefore As String
     Dim idKategoriBarangBefore As String
@@ -74,6 +75,7 @@ Private Sub CmdBtnSimpan_Click()
     If cariById Is Nothing Then
         baris = getBarisMasterBarang + 1
     Else
+        trigger = True
         baris = cariById.Row
         idMerekBarangBefore = cariById.Offset(0, 2).Value
         namaMerekBefore = cariById.Offset(0, 3).Value
@@ -91,77 +93,79 @@ Private Sub CmdBtnSimpan_Click()
                     
     wsMasterBarang.Range("A" & baris).Resize(1, 9).Value = isiData
     
-    If baris = cariById.Row Then
-    
-        ' merek barang
-        If namaMerekBefore <> ComboBoxMerekBarang.Value Then
-'            MsgBox namaMerekBefore & " = " & ComboBoxMerekBarang.Value & " " & cariById.Offset(0, 2).Value
-            Dim lastRow As Long
-            Dim i As Long
-            lastRow = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
-            For i = 2 To lastRow
-'                MsgBox wsBarangMasuk.Cells(i, 5).Value & " = " & idMerekBarangBefore
-                If wsBarangMasuk.Cells(i, 5).Value = idMerekBarangBefore Then
-                    wsBarangMasuk.Cells(i, 5).Value = cariById.Offset(0, 2).Value
-                    wsBarangMasuk.Cells(i, 6).Value = cariById.Offset(0, 3).Value
-                End If
-            Next i
-            
-            lastRow = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
-            For i = 2 To lastRow
-'                MsgBox wsBarangMasuk.Cells(i, 5).Value & " = " & idMerekBarangBefore
-                If wsPenjualanBarang.Cells(i, 5).Value = idMerekBarangBefore Then
-                    wsPenjualanBarang.Cells(i, 5).Value = cariById.Offset(0, 2).Value
-                    wsPenjualanBarang.Cells(i, 6).Value = cariById.Offset(0, 3).Value
-                End If
-            Next i
-        End If
+    If trigger Then
+        If baris = cariById.Row Then
         
-        ' kategori barang
-        If namaKategoriBefore <> ComboBoxKategoriBarang.Value Then
-'            MsgBox namaKategoriBefore & " = " & ComboBoxKategoriBarang.Value & " " & cariById.Offset(0, 4).Value
-            Dim lastRowKategoriBarang As Long
-            Dim iKategoriBarang As Long
-            lastRowKategoriBarang = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
-            For iKategoriBarang = 2 To lastRowKategoriBarang
-'                MsgBox wsBarangMasuk.Cells(iKategoriBarang, 7).Value & " = " & idKategoriBarangBefore
-                If wsBarangMasuk.Cells(iKategoriBarang, 7).Value = idKategoriBarangBefore Then
-                    wsBarangMasuk.Cells(iKategoriBarang, 7).Value = cariById.Offset(0, 4).Value
-                    wsBarangMasuk.Cells(iKategoriBarang, 8).Value = cariById.Offset(0, 5).Value
-                End If
-            Next iKategoriBarang
+            ' merek barang
+            If namaMerekBefore <> ComboBoxMerekBarang.Value Then
+    '            MsgBox namaMerekBefore & " = " & ComboBoxMerekBarang.Value & " " & cariById.Offset(0, 2).Value
+                Dim lastRow As Long
+                Dim i As Long
+                lastRow = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
+                For i = 2 To lastRow
+    '                MsgBox wsBarangMasuk.Cells(i, 5).Value & " = " & idMerekBarangBefore
+                    If wsBarangMasuk.Cells(i, 5).Value = idMerekBarangBefore Then
+                        wsBarangMasuk.Cells(i, 5).Value = cariById.Offset(0, 2).Value
+                        wsBarangMasuk.Cells(i, 6).Value = cariById.Offset(0, 3).Value
+                    End If
+                Next i
+                
+                lastRow = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
+                For i = 2 To lastRow
+    '                MsgBox wsBarangMasuk.Cells(i, 5).Value & " = " & idMerekBarangBefore
+                    If wsPenjualanBarang.Cells(i, 5).Value = idMerekBarangBefore Then
+                        wsPenjualanBarang.Cells(i, 5).Value = cariById.Offset(0, 2).Value
+                        wsPenjualanBarang.Cells(i, 6).Value = cariById.Offset(0, 3).Value
+                    End If
+                Next i
+            End If
             
-            lastRowKategoriBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
-            For iKategoriBarang = 2 To lastRowKategoriBarang
-'                MsgBox wsBarangMasuk.Cells(iKategoriBarang, 7).Value & " = " & idKategoriBarangBefore
-                If wsPenjualanBarang.Cells(iKategoriBarang, 7).Value = idKategoriBarangBefore Then
-                    wsPenjualanBarang.Cells(iKategoriBarang, 7).Value = cariById.Offset(0, 4).Value
-                    wsPenjualanBarang.Cells(iKategoriBarang, 8).Value = cariById.Offset(0, 5).Value
-                End If
-            Next iKategoriBarang
-        End If
-    
-        ' nama barang
-        If namaBarangBefore <> TextBoxNamaBarang.Value Then
-'            MsgBox namaBarangBefore & " = " & TextBoxNamaBarang.Value
-            Dim lastRowNamaBarang As Long
-            Dim iNamaBarang As Long
-            lastRowNamaBarang = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
-            For iNamaBarang = 2 To lastRowNamaBarang
-                If wsBarangMasuk.Cells(iNamaBarang, 9).Value = cariById.Value Then
-                    wsBarangMasuk.Cells(iNamaBarang, 10).Value = cariById.Offset(0, 1).Value
-                End If
-            Next iNamaBarang
-            
-            lastRowNamaBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
-            For iNamaBarang = 2 To lastRowNamaBarang
-                If wsPenjualanBarang.Cells(iNamaBarang, 9).Value = cariById.Value Then
-                    wsPenjualanBarang.Cells(iNamaBarang, 10).Value = cariById.Offset(0, 1).Value
-                End If
-            Next iNamaBarang
-        End If
+            ' kategori barang
+            If namaKategoriBefore <> ComboBoxKategoriBarang.Value Then
+    '            MsgBox namaKategoriBefore & " = " & ComboBoxKategoriBarang.Value & " " & cariById.Offset(0, 4).Value
+                Dim lastRowKategoriBarang As Long
+                Dim iKategoriBarang As Long
+                lastRowKategoriBarang = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
+                For iKategoriBarang = 2 To lastRowKategoriBarang
+    '                MsgBox wsBarangMasuk.Cells(iKategoriBarang, 7).Value & " = " & idKategoriBarangBefore
+                    If wsBarangMasuk.Cells(iKategoriBarang, 7).Value = idKategoriBarangBefore Then
+                        wsBarangMasuk.Cells(iKategoriBarang, 7).Value = cariById.Offset(0, 4).Value
+                        wsBarangMasuk.Cells(iKategoriBarang, 8).Value = cariById.Offset(0, 5).Value
+                    End If
+                Next iKategoriBarang
+                
+                lastRowKategoriBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
+                For iKategoriBarang = 2 To lastRowKategoriBarang
+    '                MsgBox wsBarangMasuk.Cells(iKategoriBarang, 7).Value & " = " & idKategoriBarangBefore
+                    If wsPenjualanBarang.Cells(iKategoriBarang, 7).Value = idKategoriBarangBefore Then
+                        wsPenjualanBarang.Cells(iKategoriBarang, 7).Value = cariById.Offset(0, 4).Value
+                        wsPenjualanBarang.Cells(iKategoriBarang, 8).Value = cariById.Offset(0, 5).Value
+                    End If
+                Next iKategoriBarang
+            End If
         
-        RefreshPivotTable
+            ' nama barang
+            If namaBarangBefore <> TextBoxNamaBarang.Value Then
+    '            MsgBox namaBarangBefore & " = " & TextBoxNamaBarang.Value
+                Dim lastRowNamaBarang As Long
+                Dim iNamaBarang As Long
+                lastRowNamaBarang = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
+                For iNamaBarang = 2 To lastRowNamaBarang
+                    If wsBarangMasuk.Cells(iNamaBarang, 9).Value = cariById.Value Then
+                        wsBarangMasuk.Cells(iNamaBarang, 10).Value = cariById.Offset(0, 1).Value
+                    End If
+                Next iNamaBarang
+                
+                lastRowNamaBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
+                For iNamaBarang = 2 To lastRowNamaBarang
+                    If wsPenjualanBarang.Cells(iNamaBarang, 9).Value = cariById.Value Then
+                        wsPenjualanBarang.Cells(iNamaBarang, 10).Value = cariById.Offset(0, 1).Value
+                    End If
+                Next iNamaBarang
+            End If
+            
+            RefreshPivotTable
+        End If
     End If
     
     MsgBox "Data berhasil disimpan!", vbInformation

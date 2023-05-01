@@ -42,11 +42,13 @@ End Sub
 Private Sub CmdBtnSimpan_Click()
     Set cariById = cariMerekBarang("A", TextBoxIdMerekBarang.Value)
     Dim baris As Long
+    Dim trigger As Boolean
     Dim merekBarangBefore As String
     
     If cariById Is Nothing Then
         baris = getBarisMerekBarang + 1
     Else
+        trigger = True
         baris = cariById.Row
         merekBarangBefore = cariById.Offset(0, 1).Value
     End If
@@ -56,41 +58,44 @@ Private Sub CmdBtnSimpan_Click()
     
     wsMerekBarang.Range("A" & baris).Resize(1, 2).Value = isiData
     
-    If baris = cariById.Row Then
-
-        If merekBarangBefore <> TextBoxMerekBarang.Value Then
-            ' sheet master barang
-            Dim lastRow As Long
-            Dim i As Long
-            lastRow = wsMasterBarang.Cells(Rows.Count, 1).End(xlUp).Row
-            For i = 2 To lastRow
-                If wsMasterBarang.Cells(i, 3).Value = cariById.Value Then
-                    wsMasterBarang.Cells(i, 4).Value = cariById.Offset(0, 1).Value
-                End If
-            Next i
-            
-            ' sheet barang masuk
-            Dim lastRowBarangMasuk As Long
-            Dim iBarangMasuk As Long
-            lastRowBarangMasuk = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
-            For iBarangMasuk = 2 To lastRowBarangMasuk
-                If wsBarangMasuk.Cells(iBarangMasuk, 5).Value = cariById.Value Then
-                    wsBarangMasuk.Cells(iBarangMasuk, 6).Value = cariById.Offset(0, 1).Value
-                End If
-            Next iBarangMasuk
-            
-            ' sheet penjualan barang
-            Dim lastRowPenjualanBarang As Long
-            Dim iPenjualanBarang As Long
-            lastRowPenjualanBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
-            For iPenjualanBarang = 2 To lastRowPenjualanBarang
-                If wsPenjualanBarang.Cells(iPenjualanBarang, 5).Value = cariById.Value Then
-                    wsPenjualanBarang.Cells(iPenjualanBarang, 6).Value = cariById.Offset(0, 1).Value
-                End If
-            Next iPenjualanBarang
-        End If
+    If trigger Then
+        If baris = cariById.Row Then
         
-        RefreshPivotTable
+            If merekBarangBefore <> TextBoxMerekBarang.Value Then
+                ' sheet master barang
+                Dim lastRow As Long
+                Dim i As Long
+                lastRow = wsMasterBarang.Cells(Rows.Count, 1).End(xlUp).Row
+                For i = 2 To lastRow
+                    If wsMasterBarang.Cells(i, 3).Value = cariById.Value Then
+                        wsMasterBarang.Cells(i, 4).Value = cariById.Offset(0, 1).Value
+                    End If
+                Next i
+                
+                ' sheet barang masuk
+                Dim lastRowBarangMasuk As Long
+                Dim iBarangMasuk As Long
+                lastRowBarangMasuk = wsBarangMasuk.Cells(Rows.Count, 1).End(xlUp).Row
+                For iBarangMasuk = 2 To lastRowBarangMasuk
+                    If wsBarangMasuk.Cells(iBarangMasuk, 5).Value = cariById.Value Then
+                        wsBarangMasuk.Cells(iBarangMasuk, 6).Value = cariById.Offset(0, 1).Value
+                    End If
+                Next iBarangMasuk
+                
+                ' sheet penjualan barang
+                Dim lastRowPenjualanBarang As Long
+                Dim iPenjualanBarang As Long
+                lastRowPenjualanBarang = wsPenjualanBarang.Cells(Rows.Count, 1).End(xlUp).Row
+                For iPenjualanBarang = 2 To lastRowPenjualanBarang
+                    If wsPenjualanBarang.Cells(iPenjualanBarang, 5).Value = cariById.Value Then
+                        wsPenjualanBarang.Cells(iPenjualanBarang, 6).Value = cariById.Offset(0, 1).Value
+                    End If
+                Next iPenjualanBarang
+            End If
+            
+            RefreshPivotTable
+        End If
+
     End If
     
     MsgBox "Data berhasil disimpan!", vbInformation

@@ -27,7 +27,7 @@ Sub PrintTotalBarangMasuk()
         ' Set Page Setup Options
         With wsToExport.PageSetup
             .LeftHeader = "&""Arial,Bold""&12" & headerText
-            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD MMMM YYYY - HH:MM")
+            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD ") & convertBulanIndonesia(Format(Now, "DD/MM/YYYY")) & " " & Format(Now, "YYYY - HH::MM")
             .CenterHorizontally = True
             .Orientation = xlPortrait
             .FitToPagesWide = 1
@@ -73,7 +73,7 @@ Sub PrintTotalPenjualanBarang()
         ' Set Page Setup Options
         With wsToExport.PageSetup
             .LeftHeader = "&""Arial,Bold""&12" & headerText
-            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD MMMM YYYY - HH:MM")
+            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD ") & convertBulanIndonesia(Format(Now, "DD/MM/YYYY")) & " " & Format(Now, "YYYY - HH::MM")
             .CenterHorizontally = True
             .Orientation = xlPortrait
             .FitToPagesWide = 1
@@ -119,7 +119,7 @@ Sub PrintTotalHargaBeli()
         ' Set Page Setup Options
         With wsToExport.PageSetup
             .LeftHeader = "&""Arial,Bold""&12" & headerText
-            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD MMMM YYYY - HH:MM")
+            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD ") & convertBulanIndonesia(Format(Now, "DD/MM/YYYY")) & " " & Format(Now, "YYYY - HH::MM")
             .CenterHorizontally = True
             .Orientation = xlPortrait
             .FitToPagesWide = 1
@@ -165,7 +165,7 @@ Sub PrintTotalHargaJual()
         ' Set Page Setup Options
         With wsToExport.PageSetup
             .LeftHeader = "&""Arial,Bold""&12" & headerText
-            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD MMMM YYYY - HH:MM")
+            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD ") & convertBulanIndonesia(Format(Now, "DD/MM/YYYY")) & " " & Format(Now, "YYYY - HH::MM")
             .CenterHorizontally = True
             .Orientation = xlPortrait
             .FitToPagesWide = 1
@@ -211,7 +211,7 @@ Sub PrintTotalKeuntungan()
         ' Set Page Setup Options
         With wsToExport.PageSetup
             .LeftHeader = "&""Arial,Bold""&12" & headerText
-            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD MMMM YYYY - HH:MM")
+            .RightHeader = "&""Arial,Regular""&12" & convertHariIndonesia(Format(Now, "DDDD")) & ", " & Format(Now, "DD ") & convertBulanIndonesia(Format(Now, "DD/MM/YYYY")) & " " & Format(Now, "YYYY - HH::MM")
             .CenterHorizontally = True
             .Orientation = xlPortrait
             .FitToPagesWide = 1
